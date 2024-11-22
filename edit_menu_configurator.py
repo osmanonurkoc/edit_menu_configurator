@@ -1,5 +1,6 @@
 import os
 import subprocess
+import re
 from PyQt5.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QPushButton, QLineEdit, QComboBox, QWidget, QFileDialog, QMessageBox
 
 class RegEditorApp(QMainWindow):
@@ -32,6 +33,10 @@ class RegEditorApp(QMainWindow):
         edit_btn = QPushButton("Edit and Register")
         edit_btn.clicked.connect(self.edit_and_register)
         layout.addWidget(edit_btn, 2, 1, 1, 2)
+
+        remove_btn = QPushButton("Remove Registry Key")
+        remove_btn.clicked.connect(self.remove_registry_key)
+        layout.addWidget(remove_btn, 3, 1, 1, 2)
 
         # Set the main layout
         container = QWidget()
@@ -103,6 +108,58 @@ class RegEditorApp(QMainWindow):
             QMessageBox.critical(self, "Error", f"Failed to import the registry file: {str(e)}")
         finally:
             os.remove(temp_file_path)  # Delete the temp file after use
+
+    def remove_registry_key(self):
+        reg_file_name = self.reg_dropdown.currentText()
+        if not reg_file_name:
+            QMessageBox.warning(self, "Warning", "Please select a .reg file to process.")
+            return
+
+        reg_file = os.path.join("./reg", reg_file_name + ".reg")
+        temp_file_path = None  # Initialize temp_file_path
+
+        try:
+            with open(reg_file, "r", encoding="utf-16le") as file:
+                content = file.read()
+
+            # Debugging output to check the content of the file
+            print("Read .reg file content:")
+            print(content)
+
+            # Regex to match both regular file types and system file associations
+            match = re.search(r"\\(?:Classes\\)?([^\\]+(?:\\[^\\]+)?)\\shell\\edit\\command", content, re.IGNORECASE)
+
+            if not match:
+                QMessageBox.critical(self, "Error", "Could not find a valid key in the .reg file.")
+                return
+
+            # Extract the extension name from the match (like 'batfile', or '.ps1')
+            extension_name = match.group(1)
+
+            # Debug: Print the matched extension
+            print(f"Matched extension: {extension_name}")
+
+            # Use the extension name in the remover template
+            remover_template_path = os.path.join("./reg/remover", "remover.reg")
+            with open(remover_template_path, "r", encoding="utf-16le") as template:
+                remover_content = template.read().replace("$EXTENSION", extension_name)
+
+            # Create a temporary file for the registry removal
+            temp_file_path = os.path.join(os.getcwd(), "temp_remover.reg")
+            with open(temp_file_path, "w", encoding="utf-16le") as temp_file:
+                temp_file.write(remover_content)
+
+            # Register the .reg file to remove the key
+            subprocess.run(["reg", "import", temp_file_path], check=True)
+            QMessageBox.information(self, "Success", f"The registry key for '{extension_name}\\shell\\edit' has been removed.")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to remove the registry key: {e}")
+
+        finally:
+            # Ensure the temporary file is deleted if it exists
+            if temp_file_path and os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
 
 if __name__ == "__main__":
     app = QApplication([])
