@@ -57,6 +57,3 @@ Contributions are welcome! If you'd like to add support for more file extensions
 
 ## Download
 Head to the [Releases page](https://github.com/osmanonurkoc/edit_menu_configurator/releases) to get the latest version of the program.
-
-## Reddit verification 
-u/kawai_pasha
