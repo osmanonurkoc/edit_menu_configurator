@@ -1,10 +1,10 @@
-# Win11 Edit Menu Enabler and Default Program Setter
+# Win10/11 Edit Menu Enabler and Default Program Setter
 
 This program enables the **"Edit"** option in the right-click context menu for specific file extensions in Windows 11 and allows users to configure the default program for editing those files by modifying the Windows Registry.
 
 ## Overview
 
-Windows 11 allows configuration of default applications for various file types. However, the **"Edit"** menu item is not available by default for some extensions in the context menu. This program addresses that limitation by:
+Windows 10/11 allows configuration of default applications for various file types. However, the **"Edit"** menu item is not available by default for some extensions in the context menu. This program addresses that limitation by:
 1. Adding the **"Edit"** option for selected file extensions.
 2. Setting a default application (e.g., Kate, Notepad, etc.) for editing those files.
 
@@ -16,7 +16,7 @@ These changes are achieved through registry modifications.
 - **Enable "Edit" Context Menu**: Adds an **"Edit"** option to the right-click context menu for supported file extensions like `.bat`, `.txt`, `.log`, etc.
 - **Set Default Edit Program**: Configures the default program to open selected file extensions for editing.
 - **Registry Modifications**: Automatically creates and updates the necessary registry keys for context menu actions.
-- **Cross-Version Support**: Fully compatible with Windows 11 and its latest updates.
+- **Cross-Version Support**: Fully compatible with Windows 10, Windows 11 and its latest updates.
 
 ---
 
