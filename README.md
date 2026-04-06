@@ -43,11 +43,6 @@ These changes are achieved through registry modifications.
    - And more (configurable via the program).
 
 ---
-
-## License
-This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).  
-You are free to use, modify, and distribute this program under the terms of the GPL.
-
 ### Disclaimer
 This program modifies the Windows Registry, which can affect system behavior. Use it at your own risk. Always back up your registry before making changes.
 
