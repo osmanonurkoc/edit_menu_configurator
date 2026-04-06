@@ -1,4 +1,7 @@
 # Win10/11 Edit Menu Enabler and Default Program Setter
+![Downloads](https://img.shields.io/github/downloads/osmanonurkoc/edit_menu_configurator/total)
+![License](https://img.shields.io/github/license/osmanonurkoc/edit_menu_configurator)
+![Release](https://img.shields.io/github/v/release/osmanonurkoc/edit_menu_configurator)
 
 This program enables the **"Edit"** option in the right-click context menu for specific file extensions in Windows 11 and allows users to configure the default program for editing those files by modifying the Windows Registry.
 
